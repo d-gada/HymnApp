@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     TextView no_data;
 
     DBHandler myDB;
-    ArrayList<String> book_id, book_title, book_author, book_pages;
+    ArrayList<String> number, title, content;
+    //ArrayList<Boolean> favorite;
     CustomAdapter customAdapter;
 
     @Override
@@ -48,23 +50,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivity(intent);
+                try{
+                startActivity(intent);}
+                catch (ActivityNotFoundException activityNotFound)
+                {System.out.println("Uh Oh!");}
             }
         });
 
         myDB = new DBHandler(MainActivity.this);
-        book_id = new ArrayList<>();
-        book_title = new ArrayList<>();
-        book_author = new ArrayList<>();
-        book_pages = new ArrayList<>();
+        //myDB.deleteAllData();
+        number = new ArrayList<>();
+        title = new ArrayList<>();
+        content = new ArrayList<>();
+        System.out.println(number);
+        System.out.println(title);
+        System.out.println(content);
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(MainActivity.this,this, book_id, book_title, book_author,
-                book_pages);
+        customAdapter = new CustomAdapter(MainActivity.this,this, number, title /*favorite*/, content);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-
     }
 
     @Override
@@ -82,15 +88,17 @@ public class MainActivity extends AppCompatActivity {
             no_data.setVisibility(View.VISIBLE);
         }else{
             while (cursor.moveToNext()){
-                book_id.add(cursor.getString(0));
-                book_title.add(cursor.getString(1));
-                book_author.add(cursor.getString(2));
-                book_pages.add(cursor.getString(3));
+//                number.add(cursor.getString(0));
+//                title.add(cursor.getString(1));
+                //THIS MIGHT NOT WORK
+//                favorite.add(cursor.getString(2));
+//                content.add(cursor.getString(2));
             }
             empty_imageview.setVisibility(View.GONE);
             no_data.setVisibility(View.GONE);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

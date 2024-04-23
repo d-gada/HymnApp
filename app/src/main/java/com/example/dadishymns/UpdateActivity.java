@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 public class UpdateActivity extends AppCompatActivity {
 
-    EditText number_input, title_input, favorite_input;
+    EditText number_input, title_input, favorite_input, content_input;
     Button update_button, delete_button;
 
-    String id, title, author, pages;
+    String id, number, title, favorite, content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class UpdateActivity extends AppCompatActivity {
 
         number_input = findViewById(R.id.number_input2);
         title_input = findViewById(R.id.title_input2);
-        favorite_input = findViewById(R.id.favorite_input2);
+        content_input = findViewById(R.id.content_input2);
         update_button = findViewById(R.id.update_button);
         delete_button = findViewById(R.id.delete_button);
 
@@ -44,10 +44,13 @@ public class UpdateActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //And only then we call this
                 DBHandler myDB = new DBHandler(UpdateActivity.this);
-                title = number_input.getText().toString().trim();
-                author = _input.getText().toString().trim();
-                pages = pages_input.getText().toString().trim();
-                myDB.updateData(id, number, title, favorite, content);
+
+                number = number_input.getText().toString().trim();
+                title = title_input.getText().toString().trim();
+//                favorite = favorite_input.getText().toString().trim();
+                content = content_input.getText().toString().trim();
+                //myDB.updateData(id, number, title, favorite, content);
+                myDB.updateData(id, number, title, content);
             }
         });
         delete_button.setOnClickListener(new View.OnClickListener() {
@@ -63,16 +66,18 @@ public class UpdateActivity extends AppCompatActivity {
         if(getIntent().hasExtra("id") && getIntent().hasExtra("title") &&
                 getIntent().hasExtra("author") && getIntent().hasExtra("pages")){
             //Getting Data from Intent
-            id = getIntent().getStringExtra("id");
+            number = getIntent().getStringExtra("number");
             title = getIntent().getStringExtra("title");
-            author = getIntent().getStringExtra("author");
-            pages = getIntent().getStringExtra("pages");
+//            favorite = getIntent().getStringExtra("favorite");
+            content = getIntent().getStringExtra("content");
 
             //Setting Intent Data
-            number_input.setText(title);
-            _input.setText(author);
-            pages_input.setText(pages);
-            Log.d("stev", title+" "+author+" "+pages);
+            number_input.setText(number);
+            title_input.setText(title);
+//            favorite_input.setText(favorite);
+            content_input.setText(content);
+            Log.d("stev", number + " " + title+" "+content);
+//            Log.d("stev", number + " " + title+" "+favorite+" "+content);
         }else{
             Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
         }
@@ -85,7 +90,7 @@ public class UpdateActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+                DBHandler myDB = new DBHandler(UpdateActivity.this);
                 myDB.deleteOneRow(id);
                 finish();
             }
