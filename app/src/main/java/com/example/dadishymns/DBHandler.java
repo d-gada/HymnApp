@@ -19,7 +19,7 @@ class DBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_NUMBER = "hymn_number";
     private static final String COLUMN_TITLE = "hymn_title";
-    private static final String COLUMN_FAVORITE = "hymn_favorite";
+//    private static final String COLUMN_FAVORITE = "hymn_favorite";
     private static final String COLUMN_CONTENT = "hymn_content";
 
     DBHandler(@Nullable Context context) {
@@ -31,9 +31,9 @@ class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + TABLE_NAME +
                 " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_NUMBER + " INTEGER, " +
+                COLUMN_NUMBER + " TEXT, " +
                 COLUMN_TITLE + " TEXT, " +
-                COLUMN_FAVORITE + " INTEGER, " +
+//                COLUMN_FAVORITE + " INTEGER, " +
                 COLUMN_CONTENT + " TEXT);";
         db.execSQL(query);
     }
@@ -43,13 +43,18 @@ class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addBook(int number, String title, int favorite, String content){
+    void addBook(String number, String title, /*String favorite,*/ String content){
+//        if (number == null || title == null || content == null) {
+//            number = "";
+//            title = "";
+//            content = "";
+//        }
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_NUMBER, number);
         cv.put(COLUMN_TITLE, title);
-        cv.put(COLUMN_FAVORITE, favorite);
+//        cv.put(COLUMN_FAVORITE, favorite);
         cv.put(COLUMN_CONTENT, content);
         long result = db.insert(TABLE_NAME,null, cv);
         if(result == -1){
@@ -70,12 +75,12 @@ class DBHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
-    void updateData(String row_id, int number, String title, int favorite, String content){
+    void updateData(String row_id, String number, String title, String favorite, String content){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_NUMBER, number);
         cv.put(COLUMN_TITLE, title);
-        cv.put(COLUMN_FAVORITE, favorite);
+//        cv.put(COLUMN_FAVORITE, favorite);
         cv.put(COLUMN_CONTENT, content);
 
         long result = db.update(TABLE_NAME, cv, "_id=?", new String[]{row_id});
