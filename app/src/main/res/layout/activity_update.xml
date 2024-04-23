@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:ems="10"
-        android:hint="Book Title"
+        android:hint="Book Number"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,23 +25,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Book Author"
+        android:hint="Book Title"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_input2" />
+        app:layout_constraintTop_toBottomOf="@+id/number_input2" />
 
     <EditText
-        android:id="@+id/favorite_input2"
+        android:id="@+id/content_input2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Number of pages"
-        android:inputType="number"
+        android:hint="Content"
+        android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/author_input2" />
+        app:layout_constraintTop_toBottomOf="@+id/title_input2" />
+
 
     <Button
         android:id="@+id/update_button"
@@ -53,7 +54,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pages_input2" />
+        app:layout_constraintTop_toBottomOf="@+id/content_input2" />
 
     <Button
         android:id="@+id/delete_button"
