@@ -21,16 +21,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private Context context;
     private Activity activity;
-    private ArrayList book_id, book_title, book_author, book_pages;
+    private ArrayList number, title, contents;
 
-    CustomAdapter(Activity activity, Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author,
-                  ArrayList book_pages){
+    CustomAdapter(Activity activity, Context context, ArrayList number, ArrayList title, ArrayList contents){
         this.activity = activity;
         this.context = context;
-        this.book_id = book_id;
-        this.book_title = book_title;
-        this.book_author = book_author;
-        this.book_pages = book_pages;
+        this.number = number;
+        this.title = title;
+        this.contents = contents;
     }
 
     @NonNull
@@ -44,19 +42,17 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        holder.book_id_txt.setText(String.valueOf(book_id.get(position)));
-        holder.book_title_txt.setText(String.valueOf(book_title.get(position)));
-        holder.book_author_txt.setText(String.valueOf(book_author.get(position)));
-        holder.book_pages_txt.setText(String.valueOf(book_pages.get(position)));
+        holder.book_id_txt.setText(String.valueOf(number.get(position)));
+        holder.book_title_txt.setText(String.valueOf(title.get(position)));
+        holder.book_author_txt.setText(String.valueOf(contents.get(position)));
         //Recyclerview onClickListener
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, UpdateActivity.class);
-                intent.putExtra("id", String.valueOf(book_id.get(position)));
-                intent.putExtra("title", String.valueOf(book_title.get(position)));
-                intent.putExtra("author", String.valueOf(book_author.get(position)));
-                intent.putExtra("pages", String.valueOf(book_pages.get(position)));
+                intent.putExtra("id", String.valueOf(number.get(position)));
+                intent.putExtra("title", String.valueOf(title.get(position)));
+                intent.putExtra("author", String.valueOf(contents.get(position)));
                 activity.startActivityForResult(intent, 1);
             }
         });
@@ -66,7 +62,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return book_id.size();
+        return number.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
